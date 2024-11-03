@@ -8,6 +8,12 @@ from src.utils.util import format_invoices
 from src.schemas import InvoiceItem
 
 
+def truncate_invoice_table(db: Session):
+    db.query(Invoice).delete()
+    db.commit()
+    return True
+
+
 def create_invoice(
     db: Session,
     task_id: str,

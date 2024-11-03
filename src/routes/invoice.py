@@ -7,6 +7,7 @@ from src.crud import (
     get_all_invoices,
     delete_invoice_by_task_id,
     update_invoice_by_task_id,
+    truncate_invoice_table,
 )
 from src.utils.util import get_extra_keys
 from typing import Dict
@@ -15,8 +16,9 @@ router = APIRouter()
 
 
 @router.post("/invoices/")
-async def save_invoices(request_data: Dict, db: Session = Depends(get_db)):
+async def save_invoices(request_data: Dict[str, Dict], db: Session = Depends(get_db)):
     try:
+        truncate_invoice_table(db)
 
         def save_invoice(key, item):
             create_invoice(

@@ -14,7 +14,7 @@ def get_extra_keys(keys: Dict) -> Dict:
     Returns:
         Dict:
     """
-    standard_keys_set = ["task", "hours", "unit_price", "discount", "amount"]
+    standard_keys_set = ["task", "hours", "unit_price", "discount", "amount", "task_id"]
     return {key: value for key, value in keys.items() if key not in standard_keys_set}
 
 
@@ -41,10 +41,10 @@ def divide_invoices_by_depth(invoices: List[Dict]) -> Dict:
     return invoices_by_depth
 
 
-def get_parent_ids(child_id : str) -> List[str]:
+def get_parent_ids(child_id: str) -> List[str]:
     """
     Returns all the parents of the child id
-    
+
     6.1.3.4 --> ['6','6.1','6.1.3']
 
     Args:
@@ -62,7 +62,7 @@ def get_parent_ids(child_id : str) -> List[str]:
     return parent_ids[:-1]
 
 
-def format_invoices(invoices:List[Dict]) -> Dict:
+def format_invoices(invoices: List[Dict]) -> Dict:
     """
     Returns a tree like invoices from a flatten list of invoices
 
