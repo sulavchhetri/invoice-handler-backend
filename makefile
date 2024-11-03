@@ -1,4 +1,4 @@
-.PHONY: build start stop
+.PHONY: build start stop all migrate-db seed
 
 build:
 	docker-compose -f docker/docker-compose.yml up --build
@@ -15,3 +15,4 @@ migrate-db:
 seed:
 	docker-compose -f docker/docker-compose.yml exec app python alembic/seed/seed.py
 
+all: build start migrate-db seed
