@@ -45,11 +45,15 @@ def get_all_invoices(db: Session):
 
 
 def delete_invoice_by_task_id(db: Session, task_id: str):
-    invoice = db.query(Invoice).filter(Invoice.task_id == task_id).first()
-    if invoice:
-        db.delete(invoice)
+    # Use a wildcard to match any task_id starting with the given task_id
+    invoices = db.query(Invoice).filter(Invoice.task_id.like(f"{task_id}%")).all()
+    
+    if invoices:
+        for invoice in invoices:
+            db.delete(invoice)
         db.commit()
         return True
+    
     return False
 
 

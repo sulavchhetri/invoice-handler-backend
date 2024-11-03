@@ -81,5 +81,38 @@ def create_invoice_table(db: Session):
         db.commit()
 
 
+def create_task_table(db: Session):
+    db = next(db)
+    # Check if the table exists
+    result = db.execute(
+        text(
+            """
+        SELECT EXISTS (
+            SELECT 1
+            FROM information_schema.tables 
+            WHERE table_name='tasks'
+        );
+    """
+        )
+    )
+
+    # Fetch the result
+    table_exists = result.scalar()
+
+    # Create the table if it doesn't exist
+    if not table_exists:
+        db.execute(
+            text(
+                """
+        CREATE TABLE tasks (
+            task_id VARCHAR PRIMARY KEY,
+            parents VARCHAR[]
+        );
+        """
+            )
+        )
+        db.commit()
+
 if __name__ == "__main__":
     create_invoice_table(get_db())
+    create_task_table(get_db())

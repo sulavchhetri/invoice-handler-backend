@@ -49,7 +49,7 @@ async def get_invoices(db: Session = Depends(get_db)):
     return get_all_invoices(db)
 
 
-@router.delete("/invoices/{task_id}")
+@router.delete("/invoices/{task_id}/")
 async def delete_invoice(task_id: str, db: Session = Depends(get_db)):
     try:
         result = delete_invoice_by_task_id(db, task_id)
@@ -61,7 +61,7 @@ async def delete_invoice(task_id: str, db: Session = Depends(get_db)):
     return {"message": "Invoice deleted successfully."}
 
 
-@router.post("/invoices/{task_id}")
+@router.post("/invoices/{task_id}/")
 async def save_invoice(
     task_id: str, request_data: InvoiceItem, db: Session = Depends(get_db)
 ):
@@ -81,7 +81,7 @@ async def save_invoice(
     return {"message": "Invoice created successfully."}
 
 
-@router.put("/invoices/{task_id}")
+@router.put("/invoices/{task_id}/")
 async def update_invoice_endpoint(
     task_id: str, request_data: InvoiceItem, db: Session = Depends(get_db)
 ):
