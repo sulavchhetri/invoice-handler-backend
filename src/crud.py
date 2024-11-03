@@ -35,3 +35,12 @@ def get_all_invoices(db: Session):
     invoice_dicts = [invoice.__dict__ for invoice in invoices]
     formatted_invoices = format_invoices(invoice_dicts)
     return formatted_invoices
+
+
+def delete_invoice_by_task_id(db: Session, task_id: str):
+    invoice = db.query(Invoice).filter(Invoice.task_id == task_id).first()
+    if invoice:
+        db.delete(invoice)
+        db.commit()
+        return True
+    return False

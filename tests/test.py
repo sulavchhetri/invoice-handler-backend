@@ -86,3 +86,8 @@ print(res.json())
 
 with open("r.json", "w") as file:
     json.dump(res.json(), file)
+
+
+# res = requests.delete("http://127.0.0.1:8000/invoices/6.1.1")
+
+# print(res.status_code, res.json())
