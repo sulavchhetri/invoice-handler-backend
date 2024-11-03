@@ -1,5 +1,5 @@
 """
-    
+    This module is used to perform CRUD operation on the database.
 """
 
 from sqlalchemy.orm import Session

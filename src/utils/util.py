@@ -1,12 +1,33 @@
-from typing import Dict
+"""
+    This module is used to manipulate invoices
+"""
+
+from typing import Dict, List
 
 
 def get_extra_keys(keys: Dict) -> Dict:
+    """
+    Filters out the standard keys from the input dictionary
+    Args:
+        keys (Dict)
+
+    Returns:
+        Dict:
+    """
     standard_keys_set = ["task", "hours", "unit_price", "discount", "amount"]
     return {key: value for key, value in keys.items() if key not in standard_keys_set}
 
 
-def divide_invoices_by_depth(invoices):
+def divide_invoices_by_depth(invoices: List[Dict]) -> Dict:
+    """
+    Divides all the flat invoices into layers of depth
+
+    Args:
+        invoices (List[Dict])
+
+    Returns:
+        Dict
+    """
     invoices_by_depth = {}
 
     for invoice in invoices:
@@ -20,7 +41,18 @@ def divide_invoices_by_depth(invoices):
     return invoices_by_depth
 
 
-def get_parent_ids(child_id):
+def get_parent_ids(child_id : str) -> List[str]:
+    """
+    Returns all the parents of the child id
+    
+    6.1.3.4 --> ['6','6.1','6.1.3']
+
+    Args:
+        child_id (str)
+
+    Returns:
+        List[str]
+    """
     parts = child_id.split(".")
     parent_ids = []
 
@@ -30,7 +62,16 @@ def get_parent_ids(child_id):
     return parent_ids[:-1]
 
 
-def format_invoices(invoices):
+def format_invoices(invoices:List[Dict]) -> Dict:
+    """
+    Returns a tree like invoices from a flatten list of invoices
+
+    Args:
+        invoices (List[Dict])
+
+    Returns:
+        Dict
+    """
     formatted_invoices = {}
     invoices_by_depth = divide_invoices_by_depth(invoices)
     depths = sorted(invoices_by_depth.keys(), key=int)

@@ -1,3 +1,7 @@
+"""
+    This module is used to create a database connection using sqlalchemy
+"""
+
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
