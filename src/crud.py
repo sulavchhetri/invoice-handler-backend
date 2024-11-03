@@ -13,7 +13,7 @@ def create_invoice(
     task_id: str,
     task: str,
     hours: int,
-    unitprice: int,
+    unit_price: int,
     discount: int,
     amount: int,
 ):
@@ -21,7 +21,7 @@ def create_invoice(
         task_id=task_id,
         task=task,
         hours=hours,
-        unitprice=unitprice,
+        unit_price=unit_price,
         discount=discount,
         amount=amount,
     )
@@ -55,7 +55,7 @@ def update_invoice_by_task_id(db: Session, task_id: str, request_data: InvoiceIt
 
     invoice.task = request_data.task
     invoice.hours = request_data.hours
-    invoice.unitprice = request_data.unit_price
+    invoice.unit_price = request_data.unit_price
     invoice.discount = request_data.discount
     invoice.amount = request_data.amount
     db.commit()

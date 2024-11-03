@@ -10,6 +10,6 @@ class Invoice(Base):
     task_id = Column(String, primary_key=True)
     task = Column(String, nullable=False)
     hours = Column(Integer, nullable=False)
-    unitprice = Column(Integer, nullable=False)
+    unit_price = Column(Integer, nullable=False)
     discount = Column(Integer, nullable=False)
     amount = Column(Integer, nullable=False)

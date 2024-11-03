@@ -73,7 +73,7 @@ def create_invoice_table(db: Session):
             hours INT NOT NULL,
             amount INT NOT NULL,
             discount INT NOT NULL,
-            unitprice INT NOT NULL
+            unit_price INT NOT NULL
         );
         """
             )
