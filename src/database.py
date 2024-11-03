@@ -17,7 +17,7 @@ pg_db = os.environ["POSTGRES_DB"]
 pg_schema = os.environ.get("POSTGRES_SCHEMA", "public")
 pg_host = os.environ["POSTGRES_HOST"]
 
-pg_url = f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}"
+pg_url = f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/invoicehandler"
 
 
 engine = create_engine(pg_url)
@@ -37,6 +37,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():
     """Yield the correct session based on request type (write or read)."""
+    print(pg_url, "came here")
     db = SessionLocal()
     try:
         yield db
@@ -112,6 +113,7 @@ def create_task_table(db: Session):
             )
         )
         db.commit()
+
 
 if __name__ == "__main__":
     create_invoice_table(get_db())
