@@ -92,10 +92,10 @@ data = {
     "amount":500,
     "discount": 10,
     "unit_price": 50,
-    "task": "6.1.1 Newly added"
+    "task": "Task 6.1.1"
 }
 
-res = requests.post("http://127.0.0.1:8000/invoices/6.1.1", json=data)
+res = requests.put("http://127.0.0.1:8000/invoices/6.1.1", json=data)
 
 
 print(res.status_code, res.json())

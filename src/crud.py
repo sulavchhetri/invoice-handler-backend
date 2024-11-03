@@ -5,6 +5,7 @@
 from sqlalchemy.orm import Session
 from src.models import Invoice
 from src.utils.util import format_invoices
+from src.schemas import InvoiceItem
 
 
 def create_invoice(
@@ -44,3 +45,18 @@ def delete_invoice_by_task_id(db: Session, task_id: str):
         db.commit()
         return True
     return False
+
+
+def update_invoice_by_task_id(db: Session, task_id: str, request_data: InvoiceItem):
+    invoice = db.query(Invoice).filter(Invoice.task_id == task_id).first()
+
+    if not invoice:
+        return None
+
+    invoice.task = request_data.task
+    invoice.hours = request_data.hours
+    invoice.unitprice = request_data.unit_price
+    invoice.discount = request_data.discount
+    invoice.amount = request_data.amount
+    db.commit()
+    return invoice

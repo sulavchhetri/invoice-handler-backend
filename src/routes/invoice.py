@@ -2,7 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from src.schemas import InvoiceItem
 from src.database import get_db
-from src.crud import create_invoice, get_all_invoices, delete_invoice_by_task_id
+from src.crud import (
+    create_invoice,
+    get_all_invoices,
+    delete_invoice_by_task_id,
+    update_invoice_by_task_id,
+)
 from src.utils.util import get_extra_keys
 from typing import Dict
 
@@ -72,3 +77,18 @@ async def save_invoice(
         raise HTTPException(status_code=400, detail=str(e))
 
     return {"message": "Invoice created successfully."}
+
+
+@router.put("/invoices/{task_id}")
+async def update_invoice_endpoint(
+    task_id: str, request_data: InvoiceItem, db: Session = Depends(get_db)
+):
+    try:
+        updated_invoice = update_invoice_by_task_id(db, task_id, request_data)
+        if not updated_invoice:
+            raise HTTPException(status_code=404, detail="Invoice not found.")
+
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return {"message": "Invoice updated successfully."}
