@@ -30,6 +30,7 @@ engine = create_engine(pg_url)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 def get_db():
     """Yield the correct session based on request type (write or read)."""
     db = SessionLocal()
@@ -42,20 +43,26 @@ def get_db():
 def create_invoice_table(db: Session):
     db = next(db)
     # Check if the table exists
-    result = db.execute(text("""
+    result = db.execute(
+        text(
+            """
         SELECT EXISTS (
             SELECT 1
             FROM information_schema.tables 
             WHERE table_name='invoices'
         );
-    """))
-    
+    """
+        )
+    )
+
     # Fetch the result
     table_exists = result.scalar()
 
     # Create the table if it doesn't exist
     if not table_exists:
-        db.execute(text("""
+        db.execute(
+            text(
+                """
         CREATE TABLE invoices (
             task_id VARCHAR PRIMARY KEY,
             task VARCHAR NOT NULL,
@@ -64,9 +71,10 @@ def create_invoice_table(db: Session):
             discount INT NOT NULL,
             unitprice INT NOT NULL
         );
-        """))
+        """
+            )
+        )
         db.commit()
-
 
 
 if __name__ == "__main__":

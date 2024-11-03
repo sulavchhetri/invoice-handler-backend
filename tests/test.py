@@ -1,16 +1,6 @@
 import requests
 import json
 
-
-items = {
-    "name": "Foo",
-    "description": "An optional description",
-    "price": 45.2,
-    "tax": 3.5
-}
-
-# url = 'http://127.0.0.1:8000/items/'
-
 data = {
     "1": {
         "task": "Task 1",
@@ -85,15 +75,14 @@ data = {
 }
 
 
-
-url = 'http://127.0.0.1:8000/invoices/'
+url = "http://127.0.0.1:8000/invoices/"
 # res = requests.post(url, json=data)
 
 res = requests.get(url)
 
 print(res.status_code)
-print(res.json())  # Print the response content
+print(res.json())
 
 
-with open('r.json','w') as file:
+with open("r.json", "w") as file:
     json.dump(res.json(), file)
