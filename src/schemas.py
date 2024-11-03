@@ -9,10 +9,6 @@ class InvoiceItem(BaseModel):
     discount: int
     amount: int
 
-    class Config:
-        extra = "allow"
-
-
 class InvoiceData(BaseModel):
     root: Dict[str, InvoiceItem]
 

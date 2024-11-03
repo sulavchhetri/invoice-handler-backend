@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-# from src.schemas import InvoiceData
+from src.schemas import InvoiceItem
 from src.database import get_db
 from src.crud import create_invoice, get_all_invoices, delete_invoice_by_task_id
 from src.utils.util import get_extra_keys
@@ -52,3 +52,23 @@ async def delete_invoice(task_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
 
     return {"message": "Invoice deleted successfully."}
+
+
+@router.post("/invoices/{task_id}")
+async def save_invoice(
+    task_id: str, request_data: InvoiceItem, db: Session = Depends(get_db)
+):
+    try:
+        create_invoice(
+            db,
+            task_id,
+            request_data.task,
+            request_data.hours,
+            request_data.unit_price,
+            request_data.discount,
+            request_data.amount,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return {"message": "Invoice created successfully."}

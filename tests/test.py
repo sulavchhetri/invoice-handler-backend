@@ -75,19 +75,27 @@ data = {
 }
 
 
-url = "http://127.0.0.1:8000/invoices/"
-# res = requests.post(url, json=data)
+# url = "http://127.0.0.1:8000/invoices/"
+# # res = requests.post(url, json=data)
 
-res = requests.get(url)
+# res = requests.get(url)
 
-print(res.status_code)
-print(res.json())
-
-
-with open("r.json", "w") as file:
-    json.dump(res.json(), file)
+# with open("r.json", "w") as file:
+#     json.dump(res.json(), file)
 
 
 # res = requests.delete("http://127.0.0.1:8000/invoices/6.1.1")
 
-# print(res.status_code, res.json())
+data = {
+    "hours": 10,
+    "task_id":"6.1.1",
+    "amount":500,
+    "discount": 10,
+    "unit_price": 50,
+    "task": "6.1.1 Newly added"
+}
+
+res = requests.post("http://127.0.0.1:8000/invoices/6.1.1", json=data)
+
+
+print(res.status_code, res.json())
