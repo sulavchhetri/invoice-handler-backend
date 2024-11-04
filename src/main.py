@@ -6,6 +6,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
+    "https://invoice-handler.netlify.app"
 ]
 
 app.add_middleware(

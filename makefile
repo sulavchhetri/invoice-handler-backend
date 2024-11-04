@@ -15,4 +15,4 @@ migrate-db:
 seed:
 	docker-compose -f docker/docker-compose.yml exec app python alembic/seed/seed.py
 
-all: build start migrate-db seed
+all: start migrate-db seed
