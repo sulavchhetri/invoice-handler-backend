@@ -4,7 +4,7 @@ build:
 	docker-compose -f docker/docker-compose.yml up --build
 
 start:
-	docker-compose -f docker/docker-compose.yml up -d
+	docker-compose -f docker/docker-compose.yml up app db -d && docker attach docker-app-1
 
 stop:
 	docker-compose -f docker/docker-compose.yml down

@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 
-load_dotenv()
-
 # Load environment variables for Postgres connections
 pg_user = os.environ["POSTGRES_USER"]
 pg_pass = os.environ["POSTGRES_PASSWORD"]
@@ -17,7 +15,7 @@ pg_db = os.environ["POSTGRES_DB"]
 pg_schema = os.environ.get("POSTGRES_SCHEMA", "public")
 pg_host = os.environ["POSTGRES_HOST"]
 
-pg_url = f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/invoicehandler"
+pg_url = f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}"
 
 
 engine = create_engine(pg_url)
@@ -37,7 +35,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():
     """Yield the correct session based on request type (write or read)."""
-    print(pg_url, "came here")
     db = SessionLocal()
     try:
         yield db

@@ -1,9 +1,6 @@
-import os
-from dotenv import load_dotenv
 from src.utils.util import get_extra_keys
 from src.crud import create_invoice, truncate_invoice_table
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from src.database import get_db
 
 data = {
     "1": {
@@ -177,34 +174,6 @@ data = {
 }
 
 
-load_dotenv()
-# Fetch environment variables
-user = os.getenv("POSTGRES_USER")
-password = os.getenv("POSTGRES_PASSWORD")
-host = os.getenv("POSTGRES_HOST")
-port = os.getenv("POSTGRES_PORT")
-database = os.getenv("POSTGRES_DB")
-
-print(database, "------------------------")
-
-pg_url = f"postgresql://{user}:{password}@{host}:{port}/invoicehandler"
-
-
-engine = create_engine(pg_url)
-
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-def get_db():
-    """Yield the correct session based on request type (write or read)."""
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
 def save_tasks(db):
     truncate_invoice_table(db)
 
@@ -227,17 +196,5 @@ def save_tasks(db):
         save_invoice(key, item)
 
 
-def main():
-    # Create a new database session
-    db = next(get_db())
-    try:
-        save_tasks(db)
-        print("Data seeded successfully!")
-    except Exception as e:
-        print(f"An error occurred while seeding data: {e}")
-    finally:
-        db.close()  # Ensure the session is closed after operation
-
-
 if __name__ == "__main__":
-    main()
+    save_tasks(next(get_db()))
