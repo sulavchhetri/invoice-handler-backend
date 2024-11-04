@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 
+load_dotenv()
+
 # Load environment variables for Postgres connections
 pg_user = os.environ["POSTGRES_USER"]
 pg_pass = os.environ["POSTGRES_PASSWORD"]
