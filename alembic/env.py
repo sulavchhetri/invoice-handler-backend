@@ -20,7 +20,7 @@ config = context.config
 
 # Set the sqlalchemy.url dynamically
 config.set_main_option(
-    "sqlalchemy.url", f"postgresql://{user}:{password}@{host}:{port}/invoicehandler"
+    "sqlalchemy.url", f"postgresql://{user}:{password}@{host}:{port}/{database}"
 )
 
 # Interpret the config file for Python logging.
