@@ -3,21 +3,19 @@
 """
 
 import os
-from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 
-load_dotenv()
-
 # Load environment variables for Postgres connections
-pg_user = os.environ["POSTGRES_USER"]
-pg_pass = os.environ["POSTGRES_PASSWORD"]
-pg_port = os.environ["POSTGRES_PORT"]
-pg_db = os.environ["POSTGRES_DB"]
-pg_schema = os.environ.get("POSTGRES_SCHEMA", "public")
-pg_host = os.environ["POSTGRES_HOST"]
 
-pg_url = f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}"
+# Fetch environment variables
+user = os.getenv("POSTGRES_USER")
+password = os.getenv("POSTGRES_PASSWORD")
+host = os.getenv("POSTGRES_HOST")
+port = os.getenv("POSTGRES_PORT")
+database = os.getenv("POSTGRES_DB")
+
+pg_url = f"postgresql://{user}:{password}@{host}:{port}/{database}"
 
 
 engine = create_engine(pg_url)
